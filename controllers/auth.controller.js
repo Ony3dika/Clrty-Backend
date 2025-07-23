@@ -22,13 +22,15 @@ export const signUp = async (req, res, next) => {
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const newUser = await User.create([
-      {
-        first_name,
-        last_name,
-        email,
-        password: hashedPassword,
-      }],
+    const newUser = await User.create(
+      [
+        {
+          first_name,
+          last_name,
+          email,
+          password: hashedPassword,
+        },
+      ],
 
       { session }
     );
@@ -46,6 +48,10 @@ export const signUp = async (req, res, next) => {
     });
   } catch (error) {
     await session.abortTransaction();
+    res.status(400).json({
+      success: false,
+      message: "Sign Up failed, please try again",
+    });
     next(error);
   }
 };
@@ -80,6 +86,10 @@ export const SignIn = async (req, res, next) => {
       data: { token, userData },
     });
   } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "Check your credentials",
+    });
     next(error);
   }
 };
