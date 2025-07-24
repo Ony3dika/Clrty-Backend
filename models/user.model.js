@@ -27,6 +27,10 @@ const userSchema = new mongoose.Schema(
       maxLength: 50,
       match: [/\S+@\S+\.\S+/, "Please use a valid email address"],
     },
+    // avatar: {
+    //   type: String, // e.g. Cloudinary or S3 image URL
+    //   default: "", // or provide a default image URL
+    // },
     password: {
       type: String,
       required: { true: "Password is required" },

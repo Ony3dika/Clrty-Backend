@@ -4,6 +4,7 @@ import { PORT } from "./config/env.js";
 import connectToDatabase from "./database/mongodb.js";
 import authRouter from "./routes/auth.routes.js";
 import userRouter from "./routes/user.routes.js";
+import taskRouter from "./routes/task.routes.js";
 const app = express();
 // Or for specific origin:
 app.use(
@@ -15,9 +16,9 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/tasks", taskRouter);
 
 app.get("/", (req, res) => {
   res.send("Welcome to SubDub");
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
 
 app.listen(PORT, async () => {
   console.log(`Clrty Backend running on port http://localhost:${PORT}`);
+ 
 
   await connectToDatabase();
 });
