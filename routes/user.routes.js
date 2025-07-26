@@ -4,7 +4,7 @@ import { getUser, getAllUsers, deleteUser } from "../controllers/user.controller
 const userRouter = Router();
 
 userRouter.get("/", getAllUsers);
-userRouter.get("/:id", getUser);
-userRouter.delete("/:id", deleteUser);
+userRouter.get("/user/:id", getUser);
+userRouter.delete("/delete/:id", deleteUser);
 
 export default userRouter;

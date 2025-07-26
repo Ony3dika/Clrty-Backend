@@ -13,8 +13,8 @@ const taskRouter = Router();
 taskRouter.get("/", authorize, getAllTasks);
 taskRouter.get("/:id", authorize, getTask);
 taskRouter.get("/user/:id", authorize, getUserTasks);
-taskRouter.post("/", authorize, createTask);
-taskRouter.put("/:id", authorize, updateTask);
-taskRouter.delete("/:id", authorize, deleteTask);
+taskRouter.post("/create/", authorize, createTask);
+taskRouter.put("/update/:id", authorize, updateTask);
+taskRouter.delete("/delete/:id", authorize, deleteTask);
 
 export default taskRouter;
