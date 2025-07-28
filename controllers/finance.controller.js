@@ -3,10 +3,14 @@ import Finance from "../models/finance.model.js";
 export const getAllFinances = async (req, res, next) => {
   try {
     const finances = await Finance.find({ createdBy: req.user._id });
+
+  
+    const sortedFinances =  finances.reverse(); // Reverse to show latest first
+
     res.status(200).json({
       success: true,
       message: "Finances fetched successfully",
-      data: finances,
+      data: sortedFinances,
     });
   } catch (error) {
     next(error);
@@ -36,7 +40,7 @@ export const getFinance = async (req, res, next) => {
 
 export const createFinance = async (req, res, next) => {
   try {
-    const { date, amount, description} = req.body;
+    const { date, amount, description } = req.body;
 
     // Extract month and year from date
     const expenseDate = new Date(date);
@@ -48,7 +52,6 @@ export const createFinance = async (req, res, next) => {
       date: expenseDate,
       amount,
       description,
-      
     };
 
     // Check if a finance doc exists for the user/month/year
@@ -88,7 +91,6 @@ export const createFinance = async (req, res, next) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-
 
 export const updateFinance = async (req, res, next) => {
   try {
