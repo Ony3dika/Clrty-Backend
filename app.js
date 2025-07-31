@@ -9,19 +9,19 @@ import financeRouter from "./routes/finance.routes.js";
 const app = express();
 // Or for specific origin:
 
-const allowedOrigins = ["http://localhost:3000", "https://clrty.vercel.app/"];
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-  })
-);
+const allowedOrigins = ["https://clrty.vercel.app/", "http://localhost:3000"];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true, // If you need to allow cookies or authorization headers
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
