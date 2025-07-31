@@ -8,10 +8,18 @@ import taskRouter from "./routes/task.routes.js";
 import financeRouter from "./routes/finance.routes.js";
 const app = express();
 // Or for specific origin:
+
+const allowedOrigins = ["http://localhost:3000", "https://clrty.vercel.app/"];
 app.use(
   cors({
-    origin: "http://localhost:3000",
-    credentials: true, // if using cookies or sessions
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
   })
 );
 app.use(express.json());
@@ -27,7 +35,7 @@ app.get("/", (req, res) => {
 
 app.listen(PORT, async () => {
   console.log(`Clrty Backend running on port http://localhost:${PORT}`);
-  
+
   await connectToDatabase();
 });
 
