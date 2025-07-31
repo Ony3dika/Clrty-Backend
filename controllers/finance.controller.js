@@ -4,8 +4,7 @@ export const getAllFinances = async (req, res, next) => {
   try {
     const finances = await Finance.find({ createdBy: req.user._id });
 
-  
-    const sortedFinances =  finances.reverse(); // Reverse to show latest first
+    const sortedFinances = finances.reverse(); // Reverse to show latest first
 
     res.status(200).json({
       success: true,
